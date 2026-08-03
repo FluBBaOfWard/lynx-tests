@@ -55,9 +55,9 @@
     jsr ResetMath
 
     lda #$FF
-    sta MATHD           ; MATHC = $00
+    sta $FC22           ; MATHD mirror, MATHC = $00
     lda #$02
-    sta MATHB           ; MATHA = $00
+    sta $FC22           ; MATHB mirror, MATHA = $00
 
     lda #$00
     sta MATHA           ; Start multiplication
@@ -69,22 +69,22 @@
 
     ; Expecting EFGH = $000001FE
     ldx #$00
-    lda MATHE
+    lda $FC23           ; MATHE mirror
     cmp #$00
     bne @fail
 
     ldx #$01
-    lda MATHF
+    lda $FC22           ; MATHF mirror
     cmp #$00
     bne @fail
 
     ldx #$02
-    lda MATHG
+    lda $FC21           ; MATHG mirror
     cmp #$01
     bne @fail
 
     ldx #$03
-    lda MATHH
+    lda $FC20           ; MATHH mirror
     cmp #$FE
     bne @fail
 
