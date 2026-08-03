@@ -55,9 +55,9 @@
     jsr ResetMath
 
     lda #$FF
-    sta $FC22           ; MATHD mirror, MATHC = $00
+    sta $FC12           ; MATHD mirror, MATHC = $00
     lda #$02
-    sta $FC22           ; MATHB mirror, MATHA = $00
+    sta $FC14           ; MATHB mirror, MATHA = $00
 
     lda #$00
     sta MATHA           ; Start multiplication
