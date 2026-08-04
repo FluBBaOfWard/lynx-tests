@@ -60,7 +60,7 @@
     sta $FC14           ; MATHB mirror, MATHA = $00
 
     lda #$00
-    sta $FC75           ; MATHA mirror, Start multiplication
+    sta MATHA           ; Start multiplication
 
 @wait_done:
     lda SPRSYS          ; Poll until math is done
@@ -119,22 +119,22 @@
 
     ; JKLM = $FFFFFFF0
     lda #$FF
-    sta MATHK           ; MATHJ = $00
+    sta $FC2E           ; MATHK mirror, MATHJ = $00
     lda #$FF
-    sta MATHJ
+    sta $FC2F           ; MATHJ mirror
     lda #$F0
-    sta MATHM           ; MATHL = $00 and clears overflow
+    sta $FC2C           ; MATHM mirror, MATHL = $00 and clears overflow
     lda #$FF
-    sta MATHL
+    sta $FC2D
 
     lda #$40
     sta SPRSYS          ; Accumulate on
 
     ; AB = $0010, CD = $0010
     lda #$10
-    sta MATHD           ; MATHC = $00
+    sta $FC32           ; MATHD mirror, MATHC = $00
     lda #$10
-    sta MATHB           ; MATHA = $00
+    sta $FC34           ; MATHB mirror, MATHA = $00
 
     lda #$00
     sta MATHA           ; Start multiplication
@@ -146,43 +146,43 @@
 
     ; Expecting EFGH = $00000100
     ldx #$00
-    lda MATHE
+    lda $FC23           ; MATHE mirror
     cmp #$00
     bne @fail
 
     ldx #$01
-    lda MATHF
+    lda $FC22           ; MATHF mirror
     cmp #$00
     bne @fail
 
     ldx #$02
-    lda MATHG
+    lda $FC21           ; MATHG mirror
     cmp #$01
     bne @fail
 
     ldx #$03
-    lda MATHH
+    lda $FC20           ; MATHH mirror
     cmp #$00
     bne @fail
 
     ; Expecting JKLM = $000000F0
     ldx #$04
-    lda MATHJ
+    lda $FC2F           ; MATHJ mirror
     cmp #$00
     bne @fail
 
     ldx #$05
-    lda MATHK
+    lda $FC2E           ; MATHK mirror
     cmp #$00
     bne @fail
 
     ldx #$06
-    lda MATHL
+    lda $FC2D           ; MATHL mirror
     cmp #$00
     bne @fail
 
     ldx #$07
-    lda MATHM
+    lda $FC2C           ; MATHM mirror
     cmp #$F0
     bne @fail
 
@@ -227,11 +227,11 @@
     sta SPRSYS          ; Signed multiply
 
     lda #$FD
-    sta MATHD
+    sta $FC72           ; MATHD mirror
     lda #$FF
-    sta MATHC
+    sta $FC73           ; MATHC mirror
     lda #$05
-    sta MATHB
+    sta $FC74           ; MATHB mirror
     lda #$00
     sta MATHA           ; Start multiplication
 
@@ -242,22 +242,22 @@
 
     ; Expecting EFGH = $FFFFFFF1
     ldx #$00
-    lda MATHE
+    lda $FC23           ; MATHE mirror
     cmp #$FF
     bne @fail
 
     ldx #$01
-    lda MATHF
+    lda $FC22           ; MATHF mirror
     cmp #$FF
     bne @fail
 
     ldx #$02
-    lda MATHG
+    lda $FC21           ; MATHG mirror
     cmp #$FF
     bne @fail
 
     ldx #$03
-    lda MATHH
+    lda $FC20           ; MATHH mirror
     cmp #$F1
     bne @fail
 
@@ -272,10 +272,10 @@
     ; Write only MATHD (zeros MATHC). If signCD fires, sign resets to false.
 
     lda #$05
-    sta MATHD           ; CD = $0005 (MATHC zeroed). Should NOT run signCD.
+    sta $FC12           ; MATHD mirror, CD = $0005 (MATHC zeroed). Should NOT run signCD.
 
     lda #$03
-    sta MATHB           ; AB low = $03 (MATHA zeroed)
+    sta $FC14           ; MATHB mirror, AB low = $03 (MATHA zeroed)
 
     lda #$00
     sta MATHA           ; Start signed multiply (AB = $0003)
@@ -288,22 +288,22 @@
     ; Expecting EFGH = $FFFFFFF1 (stale math_sign_C = true)
     ; Bug would give $0000000F (signCD reset math_sign_C to false)
     ldx #$05
-    lda MATHE
+    lda $FC23           ; MATHE mirror
     cmp #$FF
     bne @fail
 
     ldx #$06
-    lda MATHF
+    lda $FC22           ; MATHF mirror
     cmp #$FF
     bne @fail
 
     ldx #$07
-    lda MATHG
+    lda $FC21           ; MATHG mirror
     cmp #$FF
     bne @fail
 
     ldx #$08
-    lda MATHH
+    lda $FC20           ; MATHH mirror
     cmp #$F1
     bne @fail
 
@@ -332,11 +332,11 @@
     sta SPRSYS          ; Signed multiply
 
     lda #$00
-    sta MATHD
+    sta $FC32           ; MATHD mirror
     lda #$80
-    sta MATHC
+    sta $FC33           ; MATHC mirror
     lda #$02
-    sta MATHB
+    sta $FC34           ; MATHB mirror
     lda #$00
     sta MATHA           ; Start multiplication
 
@@ -347,22 +347,22 @@
 
     ; Expecting EFGH = $00010000
     ldx #$00
-    lda MATHE
+    lda $FC23           ; MATHE mirror
     cmp #$00
     bne @fail
 
     ldx #$01
-    lda MATHF
+    lda $FC22           ; MATHF mirror
     cmp #$01
     bne @fail
 
     ldx #$02
-    lda MATHG
+    lda $FC21           ; MATHG mirror
     cmp #$00
     bne @fail
 
     ldx #$03
-    lda MATHH
+    lda $FC20           ; MATHH mirror
     cmp #$00
     bne @fail
 
@@ -394,16 +394,16 @@
     jsr ResetMath
 
     lda #$0A
-    sta MATHP
+    sta $FC16           ; MATHP mirror
     lda #$00
-    sta MATHN
+    sta $FC17           ; MATHN mirror
 
     lda #$01
-    sta MATHF
+    sta $FC22           ; MATHF mirror
     lda #$00
-    sta MATHG
+    sta $FC21           ; MATHG mirror
     lda #$00
-    sta MATHH
+    sta $FC20           ; MATHH mirror
     lda #$00
     sta MATHE           ; Start division
 
@@ -414,43 +414,43 @@
 
     ; Expecting ABCD = $00001999
     ldx #$00
-    lda MATHA
+    lda $FC15           ; MATHA mirror
     cmp #$00
     bne @fail
 
     ldx #$01
-    lda MATHB
+    lda $FC14           ; MATHB mirror
     cmp #$00
     bne @fail
 
     ldx #$02
-    lda MATHC
+    lda $FC13           ; MATHC mirror
     cmp #$19
     bne @fail
 
     ldx #$03
-    lda MATHD
+    lda $FC12           ; MATHD mirror
     cmp #$99
     bne @fail
 
     ; Expecting (JK)LM = $0006
     ldx #$04
-    lda MATHJ
+    lda $FC2F           ; MATHJ mirror
     cmp #$00
     bne @fail
 
     ldx #$05
-    lda MATHK
+    lda $FC2E           ; MATHK mirror
     cmp #$00
     bne @fail
 
     ldx #$06
-    lda MATHL
+    lda $FC2D           ; MATHL mirror
     cmp #$00
     bne @fail
 
     ldx #$07
-    lda MATHM
+    lda $FC2C           ; MATHM mirror
     cmp #$06
     ;bne @fail
 
@@ -482,16 +482,16 @@
     jsr ResetMath
 
     lda #$FF
-    sta MATHP
+    sta $FC36           ; MATHP mirror
     lda #$00
-    sta MATHN
+    sta $FC37           ; MATHN mirror
 
     lda #$FF
-    sta MATHH
+    sta $FC20           ; MATHH mirror
     lda #$FF
-    sta MATHG
+    sta $FC21           ; MATHG mirror
     lda #$00
-    sta MATHF
+    sta $FC22           ; MATHF mirror
     lda #$00
     sta MATHE           ; Start division
 
@@ -502,43 +502,43 @@
 
     ; Expecting ABCD = $00000101
     ldx #$00
-    lda MATHA
+    lda $FC35           ; MATHA mirror
     cmp #$00
     bne @fail
 
     ldx #$01
-    lda MATHB
+    lda $FC34           ; MATHB mirror
     cmp #$00
     bne @fail
 
     ldx #$02
-    lda MATHC
+    lda $FC33           ; MATHC mirror
     cmp #$01
     bne @fail
 
     ldx #$03
-    lda MATHD
+    lda $FC32           ; MATHD mirror
     cmp #$01
     bne @fail
 
     ; Expecting (JK)LM = $0000
     ldx #$04
-    lda MATHJ
+    lda $FC2F           ; MATHJ mirror
     cmp #$00
     bne @fail
 
     ldx #$05
-    lda MATHK
+    lda $FC2E           ; MATHK mirror
     cmp #$00
     bne @fail
 
     ldx #$06
-    lda MATHL
+    lda $FC2D           ; MATHL mirror
     cmp #$00
     bne @fail
 
     ldx #$07
-    lda MATHM
+    lda $FC2C           ; MATHM mirror
     cmp #$00
     bne @fail
 
@@ -570,16 +570,16 @@
     jsr ResetMath
 
     lda #$00
-    sta MATHP
+    sta $FC76           ; MATHP mirror
     lda #$00
-    sta MATHN
+    sta $FC77           ; MATHN mirror
 
     lda #$34
-    sta MATHH
+    sta $FC20           ; MATHH mirror
     lda #$12
-    sta MATHG
+    sta $FC21           ; MATHG mirror
     lda #$00
-    sta MATHF
+    sta $FC22           ; MATHF mirror
     lda #$00
     sta MATHE           ; Start division
 
@@ -590,22 +590,22 @@
 
     ; Expecting ABCD = $FFFFFFFF
     ldx #$00
-    lda MATHA
+    lda $FC75           ; MATHA mirror
     cmp #$FF
     bne @fail
 
     ldx #$01
-    lda MATHB
+    lda $FC74           ; MATHB mirror
     cmp #$FF
     bne @fail
 
     ldx #$02
-    lda MATHC
+    lda $FC73           ; MATHC mirror
     cmp #$FF
     bne @fail
 
     ldx #$03
-    lda MATHD
+    lda $FC72           ; MATHD mirror
     cmp #$FF
     bne @fail
 
@@ -650,11 +650,11 @@
     stz TIM6CTLB
 
     lda #$FF
-    sta MATHD
+    sta $FC12           ; MATHD mirror
     lda #$FF
-    sta MATHC
+    sta $FC13           ; MATHC mirror
     lda #$02
-    sta MATHB
+    sta $FC14           ; MATHB mirror
 
     lda #$18
     sta TIM6CTLA        ; Start timer
@@ -693,16 +693,16 @@
 
     ;divide $12345678 by $1234
     lda #$34
-    sta MATHP
+    sta $FC76           ; MATHP mirror
     lda #$12
-    sta MATHN
+    sta $FC77           ; MATHN mirror
 
     lda #$78
-    sta MATHH
+    sta $FC20           ; MATHH mirror
     lda #$56
-    sta MATHG
+    sta $FC21           ; MATHG mirror
     lda #$34
-    sta MATHF
+    sta $FC22           ; MATHF mirror
 
     lda #$18
     sta TIM6CTLA        ; Start timer
