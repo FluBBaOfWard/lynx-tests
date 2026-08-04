@@ -132,9 +132,9 @@
 
     ; AB = $0010, CD = $0010
     lda #$10
-    sta $FC32           ; MATHD mirror, MATHC = $00
+    sta $FC12           ; MATHD mirror, MATHC = $00
     lda #$10
-    sta $FC34           ; MATHB mirror, MATHA = $00
+    sta $FC14           ; MATHB mirror, MATHA = $00
 
     lda #$00
     sta MATHA           ; Start multiplication
@@ -227,11 +227,11 @@
     sta SPRSYS          ; Signed multiply
 
     lda #$FD
-    sta $FC72           ; MATHD mirror
+    sta $FC12           ; MATHD mirror
     lda #$FF
-    sta $FC73           ; MATHC mirror
+    sta $FC13           ; MATHC mirror
     lda #$05
-    sta $FC74           ; MATHB mirror
+    sta $FC14           ; MATHB mirror
     lda #$00
     sta MATHA           ; Start multiplication
 
@@ -332,11 +332,11 @@
     sta SPRSYS          ; Signed multiply
 
     lda #$00
-    sta $FC32           ; MATHD mirror
+    sta $FC12           ; MATHD mirror
     lda #$80
-    sta $FC33           ; MATHC mirror
+    sta $FC13           ; MATHC mirror
     lda #$02
-    sta $FC34           ; MATHB mirror
+    sta $FC14           ; MATHB mirror
     lda #$00
     sta MATHA           ; Start multiplication
 
@@ -482,9 +482,9 @@
     jsr ResetMath
 
     lda #$FF
-    sta $FC36           ; MATHP mirror
+    sta $FC16           ; MATHP mirror
     lda #$00
-    sta $FC37           ; MATHN mirror
+    sta $FC17           ; MATHN mirror
 
     lda #$FF
     sta $FC20           ; MATHH mirror
@@ -502,22 +502,22 @@
 
     ; Expecting ABCD = $00000101
     ldx #$00
-    lda $FC35           ; MATHA mirror
+    lda $FC15           ; MATHA mirror
     cmp #$00
     bne @fail
 
     ldx #$01
-    lda $FC34           ; MATHB mirror
+    lda $FC14           ; MATHB mirror
     cmp #$00
     bne @fail
 
     ldx #$02
-    lda $FC33           ; MATHC mirror
+    lda $FC13           ; MATHC mirror
     cmp #$01
     bne @fail
 
     ldx #$03
-    lda $FC32           ; MATHD mirror
+    lda $FC12           ; MATHD mirror
     cmp #$01
     bne @fail
 
@@ -570,9 +570,9 @@
     jsr ResetMath
 
     lda #$00
-    sta $FC76           ; MATHP mirror
+    sta $FC16           ; MATHP mirror
     lda #$00
-    sta $FC77           ; MATHN mirror
+    sta $FC17           ; MATHN mirror
 
     lda #$34
     sta $FC20           ; MATHH mirror
@@ -590,22 +590,22 @@
 
     ; Expecting ABCD = $FFFFFFFF
     ldx #$00
-    lda $FC75           ; MATHA mirror
+    lda $FC15           ; MATHA mirror
     cmp #$FF
     bne @fail
 
     ldx #$01
-    lda $FC74           ; MATHB mirror
+    lda $FC14           ; MATHB mirror
     cmp #$FF
     bne @fail
 
     ldx #$02
-    lda $FC73           ; MATHC mirror
+    lda $FC13           ; MATHC mirror
     cmp #$FF
     bne @fail
 
     ldx #$03
-    lda $FC72           ; MATHD mirror
+    lda $FC12           ; MATHD mirror
     cmp #$FF
     bne @fail
 
@@ -693,9 +693,9 @@
 
     ;divide $12345678 by $1234
     lda #$34
-    sta $FC76           ; MATHP mirror
+    sta $FC16           ; MATHP mirror
     lda #$12
-    sta $FC77           ; MATHN mirror
+    sta $FC17           ; MATHN mirror
 
     lda #$78
     sta $FC20           ; MATHH mirror
