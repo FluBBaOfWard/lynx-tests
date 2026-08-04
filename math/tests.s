@@ -60,7 +60,7 @@
     sta $FC14           ; MATHB mirror, MATHA = $00
 
     lda #$00
-    sta MATHA           ; Start multiplication
+    sta $FC15           ; MATHA mirror, Start multiplication
 
 @wait_done:
     lda SPRSYS          ; Poll until math is done
