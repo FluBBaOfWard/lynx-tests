@@ -229,7 +229,7 @@
     lda #$FD
     sta $FC12           ; MATHD mirror
     lda #$FF
-    sta $FC13           ; MATHC mirror
+    sta MATHC
     lda #$05
     sta $FC14           ; MATHB mirror
     lda #$00
