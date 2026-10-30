@@ -12,6 +12,31 @@
 .segment "BSS"
     _g_results: .res 18
 
+; operands - register Y = carry in
+N1:		.res 1
+N2:		.res 1
+; binary result
+HA:		.res 1
+HNVZC:	.res 1
+                    ;04
+; decimal result
+DA:		.res 1
+DNVZC:	.res 1
+; predicted results
+AR:		.res 1
+NF:		.res 1
+                    ;08
+VF:		.res 1
+ZF:		.res 1
+CF:		.res 1
+ERROR:	.res 1
+                    ;0C
+; workspace
+N1L:	.res 1
+N1H:	.res 1
+N2L:	.res 1
+N2H:	.res 2
+
 ;-------------------------------------------------------------------
 .segment "ZEROPAGE"
     irq_count:      .res 1      ; Counter for IRQs received
